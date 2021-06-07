@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect  } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import QuestionAnswerPage from './pages/QuestionAnswerPage'
+import { connect } from 'react-redux'
+import { changeLayout } from './redux/actions';
+import {getLayout} from './redux/selectors'
 
-function App() {
+
+const App = ({layout, onChangeLayout}) => {
+
+  useEffect(() => { 
+    updateDimensions()
+    window.addEventListener("resize", updateDimensions);
+    
+    return () => window.removeEventListener("resize",updateDimensions);
+   }, [layout])
+  const updateDimensions = () => {
+
+
+    if(window.innerWidth <= 768 && layout === "desktop"){
+      onChangeLayout("mobile");
+    }
+    else if(window.innerWidth > 768 && layout === "mobile"){
+      onChangeLayout("desktop")
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    {layout}
+    <QuestionAnswerPage />
+    </>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  layout: getLayout(state),
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    onChangeLayout: (layoutMode) => dispatch(changeLayout(layoutMode)),
+  });
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
+
