@@ -1,4 +1,5 @@
 # Toluna Developer Task
+install the packages using "npm install" in root directory
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
