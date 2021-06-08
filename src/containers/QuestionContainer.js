@@ -1,26 +1,4 @@
-// in this file we will create a container that will contain text area and edit save toggle button.
-
-
-// UI:
-//      container
-
-//          text area
-
-//          toggle button EDIT
-
-//          toggle button SAVE
-
-// redux :
-
-//      state
-
-//          question        
-
-//      dispatch
-
-//          update question
-
-import React, {useState, useReducer, useRef, useEffect} from 'react'
+import React, {useState,  useRef} from 'react'
 import { connect } from 'react-redux'
 import {getLayout, getQuestion} from '../redux/selectors'
 import styled from "styled-components";
@@ -111,13 +89,6 @@ const LineOnSideHeaderContainer = styled.h2`
     }
 
 `;
-
-
-
-    
-// useEffect((edit) => {
-//     setEdit(edit);
-// }, [input]);
 
 const QuestionContainer = ({layout, question = {}, onUpdateQuestion}) => {
     

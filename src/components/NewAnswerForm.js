@@ -32,11 +32,6 @@ const AnswerFormWarpper = styled.div`
     font-size: 12pt;
     
 `;
-const Tester = styled.div`
-    display: flex;
-    align-items: stretch;
-
-`;
 
 const ChoseFileButton = styled.input`
     width:100%;
@@ -63,13 +58,6 @@ const AnswerInput = styled.input`
       color: #fff;
     }
 `;
-const FileName = styled.div`
-    width:100%;
-    font-size: 12pt;
-    text-align: center;
-    margin: auto;
-`;
-//
 
 const AddAnswerForm = ({layout, toggle, onSaveAnswer}) => {
     const getBase64 = (file) => {

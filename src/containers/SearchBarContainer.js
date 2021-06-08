@@ -1,25 +1,3 @@
-// in this file we will create a container that will contain input for searching answers.
-
-
-// UI:
-//      container
-
-//          input
-
-//          Search button
-
-
-// redux :
-
-//      state
-
-//          search string        
-
-//      dispatch
-
-//          update answers result list
-
-
 import React, {useState} from 'react'
 import styled from "styled-components";
 import Button from 'react-bootstrap/Button';
