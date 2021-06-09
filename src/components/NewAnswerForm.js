@@ -2,7 +2,7 @@ import React, { useState, useReducer } from 'react'
 import { connect } from 'react-redux'
 import {BsPlusCircle} from 'react-icons/bs'
 import styled from "styled-components";
-import {getLayout} from '../redux/selectors'
+import {getLayout, getNextAnswerId} from '../redux/selectors'
 import { addNewAnswer } from '../redux/actions';
 
 
@@ -59,7 +59,10 @@ const AnswerInput = styled.input`
     }
 `;
 
-const AddAnswerForm = ({layout, toggle, onSaveAnswer}) => {
+const AddAnswerForm = ({layout, toggle, onSaveAnswer, nextId}) => {
+    const [answerText, setAnswerText] = useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
+    
     const getBase64 = (file) => {
         return new Promise((resolve,reject) => {
            const reader = new FileReader();
@@ -68,14 +71,10 @@ const AddAnswerForm = ({layout, toggle, onSaveAnswer}) => {
            reader.readAsDataURL(file);
         });
     }
-    const [answerText, setAnswerText] = useState("");
-    const [selectedFile, setSelectedFile] = useState(null);
+    
     const onFileChange = function(event){ 
             const file = event.target.files[0];
             getBase64(file).then(base64 => {
-              localStorage["fileBase64"] = base64;
-              console.log("addNewAnswer");
-              console.debug("file stored",base64);
               setSelectedFile(base64); 
             });
         }; 
@@ -94,7 +93,7 @@ const AddAnswerForm = ({layout, toggle, onSaveAnswer}) => {
                         />
                     <SaveButton onClick={() => {
                         if(selectedFile !== null && answerText !== ""){
-                            onSaveAnswer(selectedFile,answerText);
+                            onSaveAnswer(selectedFile,answerText,nextId);
                             toggle();
                         }
                     }}>Save</SaveButton>
@@ -112,12 +111,12 @@ const AddAnswerButton = ({toggle}) => {
     );
 }
 
-const NewAnswerForm = ({onSaveAnswer}) => {
+const NewAnswerForm = ({onSaveAnswer,nextId}) => {
     const [buttonClicked, toggle] = useReducer(buttonClicked => !buttonClicked, false)
     return (
         <>
         <AddButtonWarpper>
-            {buttonClicked === false  ? <AddAnswerButton toggle={toggle}/>: <AddAnswerForm onSaveAnswer={onSaveAnswer} toggle={toggle}/>}
+            {buttonClicked === false  ? <AddAnswerButton toggle={toggle}/>: <AddAnswerForm onSaveAnswer={onSaveAnswer} nextId={nextId} toggle={toggle}/>}
         </AddButtonWarpper>
             
         </>
@@ -127,10 +126,11 @@ const NewAnswerForm = ({onSaveAnswer}) => {
 
 const mapStateToProps = (state) => ({
     layout: getLayout(state),
+    nextId: getNextAnswerId(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    onSaveAnswer: (imageURL,text) => dispatch(addNewAnswer(imageURL,text))
+    onSaveAnswer: (imageURL,text,id) => dispatch(addNewAnswer(imageURL,text,id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewAnswerForm)

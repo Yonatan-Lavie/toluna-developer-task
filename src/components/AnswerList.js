@@ -51,8 +51,8 @@ const AnswerList = ({ layout, startLoadingData, answers= [], onRemovePressed }) 
       </AnswerListHeader>
       <ListWarrper>
         {answers.map(
-          (item) => 
-          <AnswerListItem answer={item} onRemovePressed={onRemovePressed} layout={layout}/>
+          (item, key) => 
+          <AnswerListItem key={key} answer={item} onRemovePressed={onRemovePressed} layout={layout}/>
           ) }
       </ListWarrper>
 

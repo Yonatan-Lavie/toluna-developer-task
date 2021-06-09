@@ -24,10 +24,10 @@ export const data = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case ADD_NEW_ANSWER: {
-      const { imageURL, text } = payload; 
+            const { imageURL, text, id } = payload; 
       return {
         ...state,
-        answers: state.answers.concat({imageURL:imageURL , text: text}),
+        answers: state.answers.concat({imageURL:imageURL , text: text, id: id}),
       };
     }
     case REMOVE_ANSWER: {

@@ -12,9 +12,9 @@
 //      Failure
 
 export const ADD_NEW_ANSWER = "ADD_NEW_ANSWER";
-export const addNewAnswer = ( imageURL, text ) => ({
+export const addNewAnswer = ( imageURL, text, id ) => ({
   type: ADD_NEW_ANSWER,
-  payload: { imageURL, text  },
+  payload: { imageURL:imageURL, text: text, id: id },
 });
 
 export const REMOVE_ANSWER = "REMOVE_ANSWER";
